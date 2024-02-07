@@ -4793,6 +4793,7 @@ allocate_struct_function (tree fndecl, bool abstract_p)
 
   cfun = ggc_cleared_alloc<function> ();
 
+  cfun->cond_uids = hash_map <gcond*, unsigned>::create_ggc ();
   init_eh_for_function ();
 
   if (init_machine_status)
