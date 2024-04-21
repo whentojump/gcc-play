@@ -741,6 +741,7 @@ unsigned __gcov_kvp_dynamic_pool_index;
 /* Size of _gcov_kvp_dynamic_pool array.  */
 unsigned __gcov_kvp_dynamic_pool_size;
 
+// NOTE hook executed upon exit
 void
 __gcov_exit (void)
 {
