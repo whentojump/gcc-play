@@ -218,7 +218,8 @@ struct gcov_fn_info
 /* Type of function used to merge counters.  */
 typedef void (*gcov_merge_fn) (gcov_type *, gcov_unsigned_t);
 
-/* Information about a single object file.  */
+/* NOTE Information about a single object file.  */
+// NOTE also in kernel source kernel/gcov/gcc_4_7.c
 struct gcov_info
 {
   gcov_unsigned_t version;	/* expected version number */
