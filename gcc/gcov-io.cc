@@ -79,8 +79,9 @@ gcov_is_error (void)
 }
 
 #if IN_LIBGCOV
-/* Move to beginning of file, initialize for writing, and clear file error
+/* NOTE Move to beginning of file, initialize for writing, and clear file error
    status.  */
+// NOTE essentially a seek
 
 GCOV_LINKAGE inline void
 gcov_rewrite (void)
