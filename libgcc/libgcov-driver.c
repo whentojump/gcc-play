@@ -620,7 +620,7 @@ dump_one_gcov (struct gcov_info *gi_ptr, struct gcov_filename *gf,
   gcov_unsigned_t tag;
   fn_buffer = 0;
 
-  error = gcov_exit_open_gcda_file (gi_ptr, gf, mode);
+  error = gcov_exit_open_gcda_file (gi_ptr, gf, mode); // gf->filename will be rebuilt when processing each gcov_info struct
   if (error == -1)
     return;
 
@@ -697,7 +697,7 @@ gcov_do_dump (struct gcov_info *list, int run_counted, int mode)
   for (gi_ptr = list; gi_ptr; gi_ptr = gi_ptr->next)
     {
       dump_one_gcov (gi_ptr, &gf, run_counted, run_max, mode);
-      free (gf.filename);
+      free (gf.filename); // gf.filename is destroyed after processing each gcov_info struct
     }
 
   free (gf.prefix);
@@ -827,7 +827,7 @@ __gcov_init (struct gcov_info *info)
 // Freestanding environment:
 //    __gcov_exit()
 // -> __gcov_dump_one()
-// -> gcov_do_dump()     // Filename, loop over all "gcov_info" structs (All to the same GCDA file???)
+// -> gcov_do_dump()     // Filename, loop over all "gcov_info" structs (All to the same GCDA file??? -- see comments in gcov_do_dump() and dump_one_gcov())
 // -> dump_one_gcov()    // Handle one "gcov_info" struct: open files, read, merge and write back
 // -> write_one_data()
 
