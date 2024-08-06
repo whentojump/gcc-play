@@ -17059,7 +17059,7 @@ can be used to verify that all terms in a Boolean function are tested and have
 an independent effect on the outcome of a decision.  The result can be read
 with @code{gcov --conditions}.
 
-@xref{Cross-profiling}.
+@xref{Cross-profiling}. BUG
 
 @cindex @command{gcov}
 @opindex coverage
