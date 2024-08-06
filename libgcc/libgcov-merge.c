@@ -58,7 +58,7 @@ __gcov_merge_add (gcov_type *counters, unsigned n_counters)
 #endif /* L_gcov_merge_add */
 
 #ifdef L_gcov_merge_ior
-/* The profile merging function that just adds the counters.  It is given
+/* The profile merging function that just adds FIXME the counters.  It is given
    an array COUNTERS of N_COUNTERS old counters and it reads the same number
    of counters from the gcov file.  */
 void
