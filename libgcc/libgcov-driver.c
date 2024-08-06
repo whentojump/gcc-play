@@ -741,7 +741,23 @@ unsigned __gcov_kvp_dynamic_pool_index;
 /* Size of _gcov_kvp_dynamic_pool array.  */
 unsigned __gcov_kvp_dynamic_pool_size;
 
-// NOTE hook executed upon exit
+// NOTE The produced library is installed to
+// $PREFIX/lib/gcc/x86_64-pc-linux-gnu/15.0.0/libgcov.a and linked to each
+// program with gcov instrumentation.
+
+// NOTE Hook that's executed upon exit, also in kernel source
+// kernel/gcov/gcc_base.c.
+// Backtrace of userspace program in GDB:
+//   _start
+//   __libc_start_main_impl
+//   // The above trace is shared with __gcov_exit()
+//   __libc_start_call_main
+//   __GI_exit
+//   __run_exit_handlers
+//   _dl_fini
+//   _sub_D_00100_1
+//   __gcov_exit
+
 void
 __gcov_exit (void)
 {
@@ -758,6 +774,19 @@ __gcov_exit (void)
 
 /* Add a new object file onto the bb chain.  Invoked automatically
   when running an object file's global ctors.  */
+
+// ??? What is "object file's global ctors"? Do these object files always have a
+// main() and exit()?
+
+// NOTE Hooked that's executed before main(), also in kernel source
+// kernel/gcov/gcc_base.c.
+// Backtrace of userspace program in GDB:
+//   _start
+//   __libc_start_main_impl
+//   // The above trace is shared with __gcov_exit()
+//   call_init
+//   _sub_I_00100_0
+//   __gcov_init
 
 void
 __gcov_init (struct gcov_info *info)
@@ -788,6 +817,19 @@ __gcov_init (struct gcov_info *info)
 #ifdef NEED_L_GCOV_INFO_TO_GCDA
 /* Convert the gcov info to a gcda data stream.  It is intended for
    freestanding environments which do not support the C library file I/O.  */
+
+// Compare the code path in hosted environment and in freestanding environment:
+//
+// Hosted environment:
+//    __gcov_info_to_gcda()
+// -> write_one_data()
+//
+// Freestanding environment:
+//    __gcov_exit()
+// -> __gcov_dump_one()
+// -> gcov_do_dump()     // Filename, loop over all "gcov_info" structs (All to the same GCDA file???)
+// -> dump_one_gcov()    // Handle one "gcov_info" struct: open files, read, merge and write back
+// -> write_one_data()
 
 void
 __gcov_info_to_gcda (const struct gcov_info *gi_ptr,
