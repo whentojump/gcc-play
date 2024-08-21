@@ -3036,6 +3036,7 @@ accumulate_line_counts (source_info *src)
  * a summary (n/m outcomes covered) and a list of the missing (uncovered)
  * outcomes.  */
 
+// NOTE MC/DC output
 static void
 output_conditions (FILE *gcov_file, const block_info *binfo)
 {
@@ -3066,6 +3067,7 @@ output_conditions (FILE *gcov_file, const block_info *binfo)
 /* Output information about ARC number IX.  Returns nonzero if
    anything is output.  */
 
+// NOTE branch output
 static int
 output_branch_count (FILE *gcov_file, int ix, const arc_info *arc)
 {
@@ -3082,7 +3084,7 @@ output_branch_count (FILE *gcov_file, int ix, const arc_info *arc)
     }
   else if (!arc->is_unconditional)
     {
-      if (arc->src->count)
+      if (arc->src->count) // NOTE inconsistent way of handling negative values (1/2)
 	fnotice (gcov_file, "branch %2d taken %s%s", ix,
 		 format_gcov (arc->count, arc->src->count, -flag_counts),
 		 arc->fall_through ? " (fallthrough)"
@@ -3161,6 +3163,7 @@ pad_count_string (string &s)
    COUNT of executions.  EXCEPTIONAL_STRING and UNEXCEPTIONAL_STRING are
    used to indicate non-executed blocks.  */
 
+// NOTE line coverage output
 static void
 output_line_beginning (FILE *f, bool exists, bool unexceptional,
 		       bool has_unexecuted_block,
@@ -3172,7 +3175,7 @@ output_line_beginning (FILE *f, bool exists, bool unexceptional,
   string s;
   if (exists)
     {
-      if (count > 0)
+      if (count > 0) // NOTE inconsistent way of handling negative values (2/2)
 	{
 	  s = format_gcov (count, 0, -1);
 	  if (has_unexecuted_block
