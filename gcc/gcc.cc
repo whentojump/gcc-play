@@ -7721,6 +7721,7 @@ print_configuration (FILE *file)
     fnotice (file, "gcc driver version %s %sexecuting gcc version %s\n",
 	     version_string, pkgversion_string, compiler_version);
 
+    fnotice (file, "\n%s\n", recent_git_commits);
 }
 
 #define RETRY_ICE_ATTEMPTS 3
