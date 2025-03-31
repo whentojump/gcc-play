@@ -13359,6 +13359,8 @@ else
 	gcc_config_arguments="$TOPLEVEL_CONFIGURE_ARGUMENTS"
 fi
 
+# NOTE where the configure flags in "gcc -v" comes from
+
 # Double all backslashes and backslash all quotes to turn
 # gcc_config_arguments into a C string.
 sed -e 's/\\/\\\\/g; s/"/\\"/g' <<EOF >conftest.out
