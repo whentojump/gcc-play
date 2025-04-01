@@ -1265,6 +1265,7 @@ output_intermediate_json_line (json::array *object,
 	    branch->set_bool ("fallthrough", (*it)->fall_through);
 	    branch->set_integer ("source_block_id", (*it)->src->id);
 	    branch->set_integer ("destination_block_id", (*it)->dst->id);
+            branch->set_integer ("expression_lineno", 123);
 	    branches->append (branch);
 	  }
 	else if ((*it)->is_call_non_return)
@@ -1988,12 +1989,17 @@ find_source (const char *file_name)
 
 /* Read the notes file.  Save functions to FUNCTIONS global vector.  */
 
+static int hehe = 0;
+
 static void
 read_graph_file (void)
 {
   unsigned version;
   unsigned current_tag = 0;
   unsigned tag;
+
+  hehe++;
+  printf("gcov reading gcno -- %d\n", hehe);
 
   if (!gcov_open (bbg_file_name, 1))
     {
@@ -2111,6 +2117,7 @@ read_graph_file (void)
 	      unsigned dest = gcov_read_unsigned ();
 	      unsigned flags = gcov_read_unsigned ();
 
+              printf("gcov reading gcno -- branch -- %u %u\n", src, dest);
 	      if (dest >= fn->blocks.size ())
 		goto corrupt;
 	      arc = XCNEW (arc_info);
@@ -2193,6 +2200,7 @@ read_graph_file (void)
 	      condition_info *info = &fn->blocks[idx].conditions;
 	      info->n_terms = gcov_read_unsigned ();
 	      fn->conditions[i] = info;
+              printf("gcov reading gcno -- mcdc -- %u\n", idx);
 	    }
 	}
       else if (fn && tag == GCOV_TAG_LINES)

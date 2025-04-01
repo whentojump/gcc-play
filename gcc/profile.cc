@@ -208,8 +208,8 @@ instrument_values (histogram_values values)
 }
 
 
-/* Computes hybrid profile for all matching entries in da_file.  
-   
+/* Computes hybrid profile for all matching entries in da_file.
+
    CFG_CHECKSUM is the precomputed checksum for the CFG.  */
 
 static gcov_type *
@@ -425,7 +425,7 @@ cmp_stats (const void *ptr1, const void *ptr2)
 
 
 /* Compute the branch probabilities for the various branches.
-   Annotate them accordingly.  
+   Annotate them accordingly.
 
    CFG_CHECKSUM is the precomputed checksum for the CFG.  */
 
@@ -874,7 +874,7 @@ sort_hist_values (histogram_value hist)
     }
 }
 /* Load value histograms values whose description is stored in VALUES array
-   from .gcda file.  
+   from .gcda file.
 
    CFG_CHECKSUM is the precomputed checksum for the CFG.  */
 
@@ -1181,6 +1181,8 @@ read_thunk_profile (struct cgraph_node *node)
 
    Main entry point of this file.  */
 
+static int haha = 0;
+
 void
 branch_prob (bool thunk)
 {
@@ -1192,6 +1194,9 @@ branch_prob (bool thunk)
   histogram_values values = histogram_values ();
   unsigned cfg_checksum, lineno_checksum;
   bool output_to_file;
+
+  haha++;
+  printf("gcc:branch_prob %d\n", haha);
 
   total_num_times_called++;
 
@@ -1400,7 +1405,7 @@ branch_prob (bool thunk)
 
   /* Compute two different checksums. Note that we want to compute
      the checksum in only once place, since it depends on the shape
-     of the control flow which can change during 
+     of the control flow which can change during
      various transformations.  */
   if (thunk)
     {

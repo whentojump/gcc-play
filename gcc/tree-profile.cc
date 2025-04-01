@@ -885,6 +885,14 @@ find_conditions (struct function *fn)
 	exprs.get_or_insert (uid).safe_push (b);
     }
 
+    for (const auto& [uid, blocks] : exprs) {
+        printf("gcc:find_condition uid=%u -> [ ", uid);
+        for (const basic_block& b : blocks) {
+            printf("%d ", b->index);
+        }
+        printf("]\n", uid);
+    }
+
     /* Visit all reachable nodes and collect conditions.  Topological order is
        important so the first node of a boolean expression is visited first
        (it will mark subsequent terms).  */
